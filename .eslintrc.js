@@ -18,7 +18,6 @@ module.exports = {
         'vue'
     ],
     rules: {
-        // Permite console.warn, console.error e console.info, mas gera um aviso para console.log
         'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
         'no-debugger': 'warn',
         'vue/max-attributes-per-line': ['error', { singleline: 3 }]
