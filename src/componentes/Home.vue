@@ -12,7 +12,7 @@
                 dia!</span>
         </v-sheet>
         <v-divider class="my-4" />
-        <p class="text-capitalize display-1"><strong class="pr-3">seu saldo:</strong>{{ funds }}</p>
+        <p class="text-capitalize display-1"><strong class="pr-3">seu saldo:</strong>{{ funds | currency }}</p>
     </div>
 </template>
 

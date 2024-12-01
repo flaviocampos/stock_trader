@@ -2,14 +2,14 @@
     <v-flex class="pr-3 pb-3" xs12 md6 lg4>
         <v-card class="green darken-3 white--text">
             <v-card-title class="headline">
-                <strong>{{ stock.name }} <small>{{ stock.price }}</small></strong>
+                <strong>{{ stock.name }} <small>{{ stock.price | currency }}</small></strong>
             </v-card-title>
         </v-card>
         <v-card>
             <v-container fill-height>
-                <v-text-field label="Quantidade" type="number" v-model.number="quantity" />
-                <v-btn class="green darken-3 white--text" @click="buyStock"
-                    :disabled="isBtnCompraDisabled">Comprar</v-btn>
+                <v-text-field label="Quantidade" type="number" :error="insufficientFunds" v-model.number="quantity" />
+                <v-btn class="green darken-3 white--text" @click="buyStock" :disabled="isBtnCompraDisabled">{{
+                    insufficientFunds ? 'Insuficiente' : 'Comprar' }}</v-btn>
             </v-container>
         </v-card>
     </v-flex>
@@ -24,8 +24,16 @@ export default {
         }
     },
     computed: {
+        funds() {
+            return this.$store.getters.funds
+        },
+        insufficientFunds() {
+            // eslint-disable-next-line no-console
+            console.log(`Total:  ${this.quantity * this.stock.price}`)
+            return this.quantity * this.stock.price > this.funds
+        },
         isBtnCompraDisabled() {
-            return this.quantity <= 0 || !Number.isInteger(this.quantity)
+            return this.insufficientFunds || this.quantity <= 0 || !Number.isInteger(this.quantity)
         }
     },
     methods: {
